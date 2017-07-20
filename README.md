@@ -3,9 +3,9 @@ A collection of release and changelog management script you can easily use via N
 
 ## Installation
 
-~~~
+```bash
 $ npm install release
-~~~
+```
 
 ## Features
 
@@ -28,7 +28,7 @@ To integrate the release process into your project/package just run `$ npm insta
 
 Then use the installed scripts in you `package.json` scripts. e.g.
 
-~~~json
+```json
 {
   "scripts": {
     "build": "[your build command]",
@@ -39,14 +39,14 @@ Then use the installed scripts in you `package.json` scripts. e.g.
     "test": "[your test command]"
   }
 }
-~~~
+```
 
 
 ## update-changelog
 
-~~~
+```bash
 $ update-changelog ROOT_DIR [OPTIONS]
-~~~
+```
 
 ### Options
 
@@ -58,9 +58,9 @@ $ update-changelog ROOT_DIR [OPTIONS]
 
 ## release
 
-~~~
+```bash
 $ release NPM_PACKAGE_DIR [<newversion> | major | minor | patch | prerelease] [options]
-~~~
+```
 
 ### Options
 
@@ -74,9 +74,9 @@ $ release NPM_PACKAGE_DIR [<newversion> | major | minor | patch | prerelease] [o
 
 ## release-github
 
-~~~
+```bash
 $ github-release ROOT_DIR BUILD_DIR
-~~~
+```
 
 If you run this script the first time, it asks for a GitHub token, which will be stored in `[ROOT_DIR]/.github-release`. [Here](https://github.com/blog/1509-personal-api-tokens) you can learn how how create your personal GitHub token.
 
@@ -85,3 +85,37 @@ If you run this script the first time, it asks for a GitHub token, which will be
 ### Options
 
 - `--help`: Outputs help.
+
+## Requirements
+
+- Node 6.10 or higher is required.
+```bash
+node --version  # 6.10 or higher
+```
+
+- Git version 2.7 or higher is required for github release script.
+```bash
+git --version  # 2.7 or higher
+```
+
+- Make sure your git `push.default` is set to `simple`. This will set the upstream of you branches automatically. [readmore](http://stackoverflow.com/questions/23918062/simple-vs-current-push-default-in-git-for-decentralized-workflow).
+```bash
+git config push.default   # should be 'simple'
+```
+
+- If it is not set to `simple`.
+```bash
+git config --unset-all push.default
+git config --add push.default simple
+```
+
+- The repository needs to be checked out via SSH. [Need help?](https://help.github.com/articles/changing-a-remote-s-url/#switching-remote-urls-from-https-to-ssh)
+```bash
+git remote set-url origin git@github.com:SevenOneMedia/adtec-core.git
+```
+
+- The release script uses the GitHub API and therefore requires an [accesstoken](https://github.com/settings/tokens/new).
+The script will prompt automatically for that token once and stores it in `.git-release`. Make sure the following permissions are granted when creating a new token on GitHub:
+ ```markdown
+ [x] repo       Full control of private repositories
+ ```
