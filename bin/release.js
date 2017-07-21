@@ -92,6 +92,7 @@ const pushBuildCommands = [
 
 const pullCurrentUpstreamCommands = [
   '# set upstream for curren branch',
+  'git push -u origin $releaseBranchName',
   'git branch --set-upstream-to origin/$releaseBranchName',
   '# pull the current upstream state',
   'git pull --all --tags &&'
