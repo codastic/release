@@ -74,27 +74,6 @@ function getRepositoryInfo() {
   });
 }
 
-function promiseSeries(promiseTasks) {
-  const results = [];
-  return promiseTasks
-  .map((promiseTask) => {
-    if (typeof promiseTask !== 'function') {
-      return () => promiseTask;
-    }
-    return promiseTask;
-  })
-  .reduce((chainedPromise, promiseTask) =>
-      chainedPromise
-      .then(promiseTask)
-      .then((promiseTaskResult) => {
-        results.push(promiseTaskResult);
-        return promiseTaskResult;
-      })
-    , Promise.resolve()
-  )
-  .then(() => results);
-}
-
 function getConfig() {
   return new Promise((resolve, reject) => {
     if (fileExists(configPath)) {
@@ -219,6 +198,27 @@ function createRelease(repoInfo, config, changes) {
   .catch((error) => {
     console.error(`Error creating github release. ${error.message}`);
   });
+}
+
+function promiseSeries(promiseTasks) {
+  const results = [];
+  return promiseTasks
+  .map((promiseTask) => {
+    if (typeof promiseTask !== 'function') {
+      return () => promiseTask;
+    }
+    return promiseTask;
+  })
+  .reduce((chainedPromise, promiseTask) =>
+      chainedPromise
+      .then(promiseTask)
+      .then((promiseTaskResult) => {
+        results.push(promiseTaskResult);
+        return promiseTaskResult;
+      })
+    , Promise.resolve()
+  )
+  .then(() => results);
 }
 
 promiseSeries([
