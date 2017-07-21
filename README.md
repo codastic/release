@@ -35,7 +35,7 @@ Then use the installed scripts in you `package.json` scripts. e.g.
     "changes": "update-changelog --dry-run .",
     "prerelease": "npm run -s test && update-changelog .",
     "release": "./bin/release.js .",
-    "postrelease": "npm run -s build && github-release ./ ./dist",
+    "postrelease": "npm run -s build && release-github ./ ./dist",
     "test": "[your test command]"
   }
 }
