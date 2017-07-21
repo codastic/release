@@ -120,6 +120,7 @@ const saveCurrentBranchNameCommands = [
 const createReleaseBranchCommands = [
   `echo "### checkout|create branch ${newBranchName}, set upstream to origin" &&`,
   `git checkout ${newBranchName} &&`,
+  `git branch --set-upstream-to origin/${newBranchName}`,
   '# when major branch does not exist on remote, then push it to origin',
   `git ls-remote --exit-code . origin/${newBranchName} || git push origin ${newBranchName} -u  &&`
 ];
