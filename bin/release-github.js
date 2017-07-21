@@ -115,8 +115,6 @@ function getConfig() {
         resolve(config);
       });
     } else {
-      console.info('No `.github-release` file detected!');
-      console.info('Please enter your personal GitHub access token:');
       prompt.get(['accessToken'], (error, result) => {
         if (error) {
           reject(error);
@@ -224,10 +222,10 @@ function createRelease(repoInfo, config, changes) {
 }
 
 promiseSeries([
-  getRepositoryInfo(),
-  getConfig(),
-  getChanges(),
-  createZipOfBuild()
+  getRepositoryInfo,
+  getConfig,
+  getChanges,
+  createZipOfBuild
 ]).then(([repoInfo, config, changes]) => (
   createRelease(repoInfo, config, changes)
     .then(() => {
