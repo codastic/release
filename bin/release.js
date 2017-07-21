@@ -91,6 +91,8 @@ const pushBuildCommands = [
 ];
 
 const pullCurrentUpstreamCommands = [
+  '# set upstream for curren branch',
+  'git branch --set-upstream-to origin/$releaseBranchName',
   '# pull the current upstream state',
   'git pull --all --tags &&'
 ];
@@ -145,13 +147,13 @@ const switchToCurrentBranchCommands = [
 const cmd = [].concat(
   '############ EXECUTE THE FOLLOWING COMMANDS ################',
   switchPathCommands,
+  saveCurrentBranchNameCommands,
   pullCurrentUpstreamCommands,
   changelogCommands,
   updatePackageJsonCommands,
   argv['build-command'] ? buildCommands : [],
   pushUpstreamCommands,
   saveCurrentBranchNameCommands,
-  createReleaseBranchCommands,
   pullCommands,
   argv['push-build'] ? pushBuildCommands : [],
   updateReleaseBranchCommands,
