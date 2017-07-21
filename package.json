@@ -9,10 +9,10 @@
     "postrelease": "npm publish . --access public",
     "test": "eslint ."
   },
-  "bin" : {
-    "release-github" : "./bin/release-github.js",
-    "release" : "./bin/release.js",
-    "update-changelog" : "./bin/update-changelog.js"
+  "bin": {
+    "release-github": "./bin/release-github.js",
+    "release": "./bin/release.js",
+    "update-changelog": "./bin/update-changelog.js"
   },
   "repository": {
     "type": "git",
