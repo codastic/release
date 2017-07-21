@@ -1,10 +1,10 @@
-# codastic-release
+# @codastic/release
 A collection of release and changelog management script you can easily use via NPM.
 
 ## Installation
 
 ```bash
-$ npm install codastic-release
+$ npm install @codastic/release
 ```
 
 ## Features
@@ -15,7 +15,7 @@ $ npm install codastic-release
 
 ## Quick Start
 
-Running `npm install codastic-release` adds the following scripts to you local `node_modules/.bin` folder:
+Running `npm install @codastic/release` adds the following scripts to you local `node_modules/.bin` folder:
 
 - **update-changelog**: Adds merged pulled requests since last versioned release to `CHANGELOG.md`,
 Supports pull requests from Github and Bitbucket.
@@ -24,7 +24,7 @@ Supports pull requests from Github and Bitbucket.
 
 - **release-github**: Creates a Github release by zipping and uploading the build folder and using current version number from `package.json`.
 
-To integrate the release process into your project/package just run `$ npm install --save-dev codastic-release`.
+To integrate the release process into your project/package just run `$ npm install --save-dev @codastic/release`.
 
 Then use the installed scripts in you `package.json` scripts. e.g.
 
