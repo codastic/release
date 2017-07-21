@@ -93,7 +93,6 @@ const pushBuildCommands = [
 const pullCurrentUpstreamCommands = [
   '# set upstream for curren branch',
   'git push -u origin $releaseBranchName',
-  'git branch --set-upstream-to origin/$releaseBranchName',
   '# pull the current upstream state',
   'git pull --all --tags &&'
 ];
@@ -122,7 +121,7 @@ const saveCurrentBranchNameCommands = [
 
 const createReleaseBranchCommands = [
   `echo "### checkout|create branch ${newBranchName}, set upstream to origin" &&`,
-  `git checkout ${newBranchName} &&`,
+  `git checkout ${newBranchName} 2>/dev/null || git checkout -b ${newBranchName}`,
   `git branch --set-upstream-to origin/${newBranchName}`,
   '# when major branch does not exist on remote, then push it to origin',
   `git ls-remote --exit-code . origin/${newBranchName} || git push origin ${newBranchName} -u  &&`
