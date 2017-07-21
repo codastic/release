@@ -94,6 +94,8 @@ function getConfig() {
         resolve(config);
       });
     } else {
+      console.info('No `.github-release` file detected!');
+      console.info('Please enter your personal GitHub access token:');
       prompt.get(['accessToken'], (error, result) => {
         if (error) {
           reject(error);
