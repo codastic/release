@@ -12,7 +12,7 @@ const argv = minimist(process.argv, {
   default: {
     'push-build': null,
     'target-branch': null,
-    build: null
+    'build-command': null
   }
 });
 
@@ -42,7 +42,7 @@ if (!toVersion || !fileExists(packageJsonPath) || argv.help) {
     'Options:',
     '  --push-build (optional) Push the build in this ignored folder to the version branch.',
     '  --target-branch (optional) (default: MAJOR.x) The branch where the release will be pushed to.',
-    '  --build (optional) Run the build to be able to include the new version from package.json'
+    '  --build-command (optional) Run the build to be able to include the new version from package.json'
   ].join('\n'));
   process.exit(1);
 }
@@ -103,7 +103,7 @@ const updatePackageJsonCommands = [
 
 const buildCommands = [
   '# Run the build script',
-  `${argv.build} &&`
+  `${argv['build-command']} &&`
 ];
 
 const pushUpstreamCommands = [
@@ -147,7 +147,7 @@ const cmd = [].concat(
   pullCurrentUpstreamCommands,
   changelogCommands,
   updatePackageJsonCommands,
-  argv.build ? buildCommands : [],
+  argv['build-command'] ? buildCommands : [],
   pushUpstreamCommands,
   saveCurrentBranchNameCommands,
   createReleaseBranchCommands,

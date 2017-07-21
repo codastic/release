@@ -24,11 +24,10 @@ if (argv.help) {
   console.log([
     `Adds merged pulled requests since last versioned release to ${changelogName}`,
     'Supports pull requests from Github and Bitbucket. Uses "git" and "npm".\n',
-    'Usage: update-changelog.js ROOT_DIR',
+    'Usage: update-changelog ROOT_DIR',
     'Options:',
-    '  --help Output help',
-    '  --dry-run Outputs changes instead of writing to CHANGELOG.md.',
-    '  --since Limit search for pull requests to the given ISO date (e.g. "2017-01-01").'
+    '  --dry-run (optional) Outputs changes instead of writing to CHANGELOG.md.',
+    '  --since (optional) Limit search for pull requests to the given ISO date (e.g. "2017-01-01").'
   ].join('\n'));
   process.exit(0);
 }
