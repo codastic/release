@@ -6,7 +6,7 @@
     "changes": "./bin/update-changelog.js --dry-run .",
     "prerelease": "npm run -s test && ./bin/update-changelog.js .",
     "release": "./bin/release.js .",
-    "postrelease": "npm publish . --access public",
+    "xxx": "npm publish . --access public",
     "test": "eslint ."
   },
   "bin" : {
