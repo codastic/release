@@ -153,7 +153,7 @@ const cmd = [].concat(
   updatePackageJsonCommands,
   argv['build-command'] ? buildCommands : [],
   pushUpstreamCommands,
-  saveCurrentBranchNameCommands,
+  createReleaseBranchCommands,
   pullCommands,
   argv['push-build'] ? pushBuildCommands : [],
   updateReleaseBranchCommands,
