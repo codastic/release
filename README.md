@@ -99,17 +99,6 @@ node --version  # 6.10 or higher
 git --version  # 2.7 or higher
 ```
 
-- Make sure your git `push.default` is set to `simple`. This will set the upstream of you branches automatically. [readmore](http://stackoverflow.com/questions/23918062/simple-vs-current-push-default-in-git-for-decentralized-workflow).
-```bash
-git config push.default   # should be 'simple'
-```
-
-- If it is not set to `simple`.
-```bash
-git config --unset-all push.default
-git config --add push.default simple
-```
-
 - The repository needs to be checked out via SSH. [Need help?](https://help.github.com/articles/changing-a-remote-s-url/#switching-remote-urls-from-https-to-ssh)
 ```bash
 git remote set-url origin git@github.com:SevenOneMedia/adtec-core.git
