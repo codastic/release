@@ -1,4 +1,8 @@
 
+### v1.1.0 / 2017-07-22 08:21:38
+
+- Namespace package, fix readme and prompt order in release-github script (i: Chris Ranz, r: Mario Volke, c: e367197)
+
 ### v1.0.0 / 2017-07-21 11:55:43
 
 - Automatically set upstream and create the release branch (i: Chris Ranz, r: Mario Volke, c: 1f8e8db)
