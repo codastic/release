@@ -1,5 +1,5 @@
 {
-  "name": "codastic-release",
+  "name": "@codastic/release",
   "version": "1.0.0",
   "description": "A collection of release and changelog management script you can easily use via NPM.",
   "scripts": {

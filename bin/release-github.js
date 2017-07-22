@@ -200,11 +200,32 @@ function createRelease(repoInfo, config, changes) {
   });
 }
 
-Promise.all([
-  getRepositoryInfo(),
-  getConfig(),
-  getChanges(),
-  createZipOfBuild()
+function promiseSeries(promiseTasks) {
+  const results = [];
+  return promiseTasks
+  .map((promiseTask) => {
+    if (typeof promiseTask !== 'function') {
+      return () => promiseTask;
+    }
+    return promiseTask;
+  })
+  .reduce((chainedPromise, promiseTask) =>
+      chainedPromise
+      .then(promiseTask)
+      .then((promiseTaskResult) => {
+        results.push(promiseTaskResult);
+        return promiseTaskResult;
+      })
+    , Promise.resolve()
+  )
+  .then(() => results);
+}
+
+promiseSeries([
+  getRepositoryInfo,
+  getConfig,
+  getChanges,
+  createZipOfBuild
 ]).then(([repoInfo, config, changes]) => (
   createRelease(repoInfo, config, changes)
     .then(() => {
