@@ -34,14 +34,12 @@ Then use the installed scripts in you `package.json` scripts. e.g.
     "build": "[your build command]",
     "changes": "update-changelog --dry-run .",
     "prerelease": "npm run -s test && update-changelog .",
-    "release": "./bin/release.js .",
+    "release": "release .",
     "postrelease": "npm run -s build && release-github ./ ./dist",
     "test": "[your test command]"
   }
 }
 ```
-
-
 
 ## update-changelog
 
