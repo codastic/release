@@ -60,7 +60,13 @@ function getPullRequests(callback) {
       } else if (line === '__pr-end__') {
         const commit = group.shift();
         const reviewer = group.shift();
-        const message = group.join().replace(/\n|\r/g, '').trim();
+        const approvedBy = /^Approved-by:\s([^<]+)\s<([^>]+)>$/;
+        const message = group
+          .filter(l => !approvedBy.test(l))
+          .join()
+          .replace(/\n|\r/g, '')
+          .trim();
+
         pullRequests.push({
           commit,
           reviewer,
@@ -123,8 +129,15 @@ function resolveImplementers(pullRequests, callback) {
         throw error;
       }
 
+      const pullRequest = pullRequests[pos];
+
       // eslint-disable-next-line no-param-reassign
-      pullRequests[pos].implementer = stdout.replace(/\n|\r/g, '').trim();
+      pullRequest.implementer = stdout.replace(/\n|\r/g, '').trim();
+
+      // In Bitbucket it is not possible to find the reviewer within git data
+      if (pullRequest.implementer === pullRequest.reviewer) {
+        pullRequest.reviewer = null;
+      }
 
       next(pos + 1);
     });
@@ -135,9 +148,13 @@ function resolveImplementers(pullRequests, callback) {
 }
 
 function stringifyPullRequests(pullRequests) {
-  return pullRequests.map(({ message, implementer, reviewer, commit }) => (
-    `- ${message} (i: ${implementer}, r: ${reviewer}, c: ${commit})\n`
-  )).join('');
+  return pullRequests.map(({ message, implementer, reviewer, commit }) => {
+    // Bitbucket case
+    if (!reviewer) {
+      return `- ${message} (i: ${implementer}, c: ${commit})\n`;
+    }
+    return `- ${message} (i: ${implementer}, r: ${reviewer}, c: ${commit})\n`;
+  }).join('');
 }
 
 function prependToChangelog(str) {
