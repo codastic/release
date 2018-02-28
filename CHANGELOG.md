@@ -1,4 +1,8 @@
 
+### v1.3.0 / 2018-02-28 11:11:17
+
+- Add files built via `--build-command` if not ignored (i: Chris Ranz, r: Mario Volke, c: bc55a82)
+
 ### v1.2.0 / 2018-01-16 12:33:09
 
 - Make reviewer in changelog optional in bitbucket (i: Mario Volke, r: Christian Ranz, c: 1cdaaaa)
