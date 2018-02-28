@@ -109,7 +109,7 @@ const updatePackageJsonCommands = [
 const buildCommands = [
   '# Run the build script',
   `${argv['build-command']} &&`,
-  '# Add buildt changes',
+  '# Add built changes',
   'git add --all &&',
   `git diff-index --quiet HEAD || git commit -m 'Added built files to verion v${newVersion}'`
 ];
