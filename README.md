@@ -69,7 +69,7 @@ $ release NPM_PACKAGE_DIR [<newversion> | major | minor | patch | prerelease] [o
 
 - `--target-branch`: *(optional)* (default: MAJOR.x) The branch where the release will be pushed to (e.g. `--target-branch='master'`).
 
-- `--build-command`: *(optional)* Run the build to be able to include the new version from `package.json` (e.g `--build-command='npm run build' ./"`).
+- `--build-command`: *(optional)* Run the build to be able to include the new version from `package.json` (e.g `--build-command='npm run build' ./"`). Also adds and commits the build files if they are not ignored.
 
 ## release-github
 
