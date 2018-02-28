@@ -42,7 +42,10 @@ if (!toVersion || !fileExists(packageJsonPath) || argv.help) {
     'Options:',
     '  --push-build (optional) Push the build in this ignored folder to the version branch.',
     '  --target-branch (optional) (default: MAJOR.x) The branch where the release will be pushed to.',
-    '  --build-command (optional) Run the build to be able to include the new version from package.json'
+    [
+      '  --build-command (optional) Run the build to be able to include the new version from package.json.',
+      'Also adds the built files if they are not ignored.'
+    ].join(' ')
   ].join('\n'));
   process.exit(1);
 }
@@ -105,7 +108,10 @@ const updatePackageJsonCommands = [
 
 const buildCommands = [
   '# Run the build script',
-  `${argv['build-command']} &&`
+  `${argv['build-command']} &&`,
+  '# Add buildt changes',
+  'git add --all &&',
+  `git diff-index --quiet HEAD || git commit -m 'Added built files to verion v${newVersion}'`
 ];
 
 const pushUpstreamCommands = [
