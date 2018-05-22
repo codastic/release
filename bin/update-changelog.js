@@ -29,7 +29,7 @@ if (argv.help) {
     'Options:',
     '  --dry-run (optional) Outputs changes instead of writing to CHANGELOG.md.',
     '  --since (optional) Limit search for pull requests to the given ISO date (e.g. "2017-01-01").',
-    '  --hide-reviewer (optional) If set then the reviewer will not be put into the CHANGELOG.md.'
+    '  --hide-reviewer (optional) If set the reviewer will not be put into the CHANGELOG.md.'
   ].join('\n'));
   process.exit(0);
 }
