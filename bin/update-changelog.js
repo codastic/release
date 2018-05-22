@@ -164,7 +164,7 @@ function stringifyPullRequests(pullRequests) {
 }
 
 function prependToChangelog(str) {
-  let data = new Buffer('');
+  let data = Buffer.from('');
   try {
     data = fs.readFileSync(changelogPath); // Read existing contents into data
   } catch (error) {
@@ -172,10 +172,10 @@ function prependToChangelog(str) {
   }
 
   const fd = fs.openSync(changelogPath, 'w+');
-  const buffer = new Buffer(str);
+  const buffer = Buffer.from(str);
   fs.writeSync(fd, buffer, 0, buffer.length); // Write new data
   fs.writeSync(fd, data, 0, data.length); // Append old data
-  fs.close(fd);
+  fs.closeSync(fd);
 }
 
 getPullRequests((pullRequests) => {
