@@ -7,10 +7,11 @@ const readline = require('readline');
 const minimist = require('minimist');
 
 const argv = minimist(process.argv, {
-  boolean: ['dry-run', 'help'],
+  boolean: ['dry-run', 'help', 'hide-reviewer'],
   string: ['since'],
   default: {
-    'dry-run': false
+    'dry-run': false,
+    'hide-reviewer': false
   }
 });
 
@@ -27,16 +28,21 @@ if (argv.help) {
     'Usage: update-changelog ROOT_DIR',
     'Options:',
     '  --dry-run (optional) Outputs changes instead of writing to CHANGELOG.md.',
-    '  --since (optional) Limit search for pull requests to the given ISO date (e.g. "2017-01-01").'
+    '  --since (optional) Limit search for pull requests to the given ISO date (e.g. "2017-01-01").',
+    '  --hide-reviewer (optional) If set then the reviewer will not be put into the CHANGELOG.md.'
   ].join('\n'));
   process.exit(0);
 }
 
 function getPullRequests(callback) {
   // Get latest 500 pull requests
-  let cmd = 'git --no-pager log --grep \'Merged in .* (pull request #.*)\'' +
-    ' --grep \'Merge pull request #.*\' --merges ' +
-    '--pretty=\'format:__pr-start__%n%h%n%an%n%b%n__pr-end__\' -500';
+  let cmd = 'git --no-pager log ' +
+    '--grep \'Merged in .* (pull request #.*)\' ' + // Butbucket format
+    '--grep \'Merge pull request #.*\' ' + // Github format
+    '--grep \'Merged PR .*: .*\' ' + // VisualStudio Team Services format
+    '--merges ' +
+    '--pretty=\'format:__pr-start__%n%h%n%an%n%b%n__pr-end__\' ' +
+    '-500';
 
   if (argv.since) {
     cmd += ` --date=iso --since='${argv.since}'`;
@@ -134,8 +140,8 @@ function resolveImplementers(pullRequests, callback) {
       // eslint-disable-next-line no-param-reassign
       pullRequest.implementer = stdout.replace(/\n|\r/g, '').trim();
 
-      // In Bitbucket it is not possible to find the reviewer within git data
-      if (pullRequest.implementer === pullRequest.reviewer) {
+      // In Bitbucket and Visual Studio Team Services it is not possible to find the reviewer within git data
+      if (argv['hide-reviewer'] || pullRequest.implementer === pullRequest.reviewer) {
         pullRequest.reviewer = null;
       }
 
