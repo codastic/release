@@ -55,6 +55,8 @@ $ update-changelog ROOT_DIR [OPTIONS]
 
 - `--since`: *(optional)* Limit search for pull requests to the given ISO date (e.g. `--since='2017-01-01'`).
 
+- `--hide-reviewer`: *(optional)* If set the reviewer will not be put into the `CHANGELOG.md`.
+
 ## release
 
 ```bash
