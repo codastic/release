@@ -1,4 +1,10 @@
 
+### v1.4.0 / 2018-05-22 11:41:29
+
+- Update README to reflect api changes in changelog script (i: Mario Volke, r: Jonathan Häberle, c: bd50dd2)
+- Add changes for node v10 (i: Henry Pötzl, r: Mario Volke, c: c301d9f)
+- Add support for Visual Studio Team Services in changelog (i: Mario Volke, r: Jonathan Häberle, c: e9081f8)
+
 ### v1.3.0 / 2018-02-28 11:11:17
 
 - Add files built via `--build-command` if not ignored (i: Chris Ranz, r: Mario Volke, c: bc55a82)
