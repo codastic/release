@@ -41,7 +41,7 @@ function getPullRequests(callback) {
     '--grep \'Merge pull request #.*\' ' + // Github format
     '--grep \'Merged PR .*: .*\' ' + // VisualStudio Team Services format
     '--merges ' +
-    '--pretty=\'format:__pr-start__%n%h%n%an%n%b%n__pr-end__\' ' +
+    '--pretty=\'format:__pr-start__%n%h%n%an%n%s%n%b%n__pr-end__\' ' +
     '-500';
 
   if (argv.since) {
@@ -66,12 +66,19 @@ function getPullRequests(callback) {
       } else if (line === '__pr-end__') {
         const commit = group.shift();
         const reviewer = group.shift();
+        const subject = group.shift();
         const approvedBy = /^Approved-by:\s([^<]+)\s<([^>]+)>$/;
-        const message = group
+        let message = group
           .filter(l => !approvedBy.test(l))
           .join()
           .replace(/\n|\r/g, '')
           .trim();
+
+        // Visual Studio Team Services do not guarantee to provide the PR title within the body
+        const matches = /Merged PR \d+: (.*)/.exec(subject);
+        if (matches) {
+          message = matches[1];
+        }
 
         pullRequests.push({
           commit,
