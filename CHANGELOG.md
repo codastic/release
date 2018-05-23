@@ -1,4 +1,8 @@
 
+### v1.4.1 / 2018-05-23 10:02:19
+
+- Fix missing title in changelog when using VisualStudio Team Services (i: Mario Volke, r: Jonathan Häberle, c: a84e1e8)
+
 ### v1.4.0 / 2018-05-22 11:41:29
 
 - Update README to reflect api changes in changelog script (i: Mario Volke, r: Jonathan Häberle, c: bd50dd2)
