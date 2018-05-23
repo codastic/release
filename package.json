@@ -1,6 +1,6 @@
 {
   "name": "@codastic/release",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "A collection of release and changelog management script you can easily use via NPM.",
   "scripts": {
     "changes": "./bin/update-changelog.js --dry-run .",
