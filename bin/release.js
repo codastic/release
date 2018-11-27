@@ -17,7 +17,7 @@ const argv = minimist(process.argv, {
 });
 
 const fileExists = fs.existsSync || fs.accessSync;
-const exec = childProcess.exec;
+const { exec } = childProcess;
 
 const toVersion = argv._.pop();
 const npmPackageDirectory = argv._.pop();

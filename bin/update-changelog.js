@@ -15,7 +15,7 @@ const argv = minimist(process.argv, {
   }
 });
 
-const exec = childProcess.exec;
+const { exec } = childProcess;
 const rootDirectory = argv._.pop();
 
 const changelogName = 'CHANGELOG.md';
@@ -36,13 +36,13 @@ if (argv.help) {
 
 function getPullRequests(callback) {
   // Get latest 500 pull requests
-  let cmd = 'git --no-pager log ' +
-    '--grep \'Merged in .* (pull request #.*)\' ' + // Butbucket format
-    '--grep \'Merge pull request #.*\' ' + // Github format
-    '--grep \'Merged PR .*: .*\' ' + // VisualStudio Team Services format
-    '--merges ' +
-    '--pretty=\'format:__pr-start__%n%h%n%an%n%s%n%b%n__pr-end__\' ' +
-    '-500';
+  let cmd = 'git --no-pager log '
+    + '--grep \'Merged in .* (pull request #.*)\' ' // Butbucket format
+    + '--grep \'Merge pull request #.*\' ' // Github format
+    + '--grep \'Merged PR .*: .*\' ' // VisualStudio Team Services format
+    + '--merges '
+    + '--pretty=\'format:__pr-start__%n%h%n%an%n%s%n%b%n__pr-end__\' '
+    + '-500';
 
   if (argv.since) {
     cmd += ` --date=iso --since='${argv.since}'`;
@@ -77,7 +77,7 @@ function getPullRequests(callback) {
         // Visual Studio Team Services do not guarantee to provide the PR title within the body
         const matches = /Merged PR \d+: (.*)/.exec(subject);
         if (matches) {
-          message = matches[1];
+          [message] = matches;
         }
 
         pullRequests.push({
@@ -161,7 +161,12 @@ function resolveImplementers(pullRequests, callback) {
 }
 
 function stringifyPullRequests(pullRequests) {
-  return pullRequests.map(({ message, implementer, reviewer, commit }) => {
+  return pullRequests.map(({
+    message,
+    implementer,
+    reviewer,
+    commit
+  }) => {
     // Bitbucket case
     if (!reviewer) {
       return `- ${message} (i: ${implementer}, c: ${commit})\n`;
