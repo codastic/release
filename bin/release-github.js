@@ -6,7 +6,7 @@ const path = require('path');
 const minimist = require('minimist');
 const prompt = require('prompt');
 const readline = require('readline');
-const GitHubApi = require('github');
+const octokit = require('@octokit/rest');
 
 prompt.message = 'Requires initial config';
 prompt.start();
@@ -20,15 +20,8 @@ const argv = minimist(process.argv, {
   }
 });
 
-const github = new GitHubApi({
-  headers: {
-    'user-agent': 'Github-Release-Script'
-  },
-  timeout: 5000
-});
-
 const fileExists = fs.existsSync || fs.accessSync;
-const exec = childProcess.exec;
+const { exec } = childProcess;
 
 const buildDirectory = argv._.pop();
 const rootDirectory = argv._.pop();
@@ -169,56 +162,53 @@ function getChanges() {
 
 function createRelease(repoInfo, config, changes) {
   console.info('Create GitHub release.');
-  github.authenticate({
+  octokit.authenticate({
     type: 'token',
     token: config.accessToken
   });
 
-  return github.repos.createRelease({
+  return octokit.repos.createRelease({
     owner: repoInfo.owner,
     repo: repoInfo.repo,
     tag_name: `v${packageJson.version}`,
     name: `Version ${packageJson.version}`,
     body: changes
   })
-  .then((release) => {
-    console.info('Create GitHub release created.');
-    console.info('Upload dist assets.');
-    return github.repos.uploadAsset({
-      owner: repoInfo.owner,
-      repo: repoInfo.repo,
-      id: release.data.id,
-      filePath: buildZipPath,
-      name: `${repoInfo.repo}-v${packageJson.version}.zip`
+    .then((release) => {
+      console.info('Create GitHub release created.');
+      console.info('Upload dist assets.');
+      return octokit.repos.uploadAsset({
+        owner: repoInfo.owner,
+        repo: repoInfo.repo,
+        id: release.data.id,
+        filePath: buildZipPath,
+        name: `${repoInfo.repo}-v${packageJson.version}.zip`
+      })
+        .catch((error) => {
+          console.error(`Error uploading dist asssets. ${error.message}`);
+        });
     })
     .catch((error) => {
-      console.error(`Error uploading dist asssets. ${error.message}`);
+      console.error(`Error creating github release. ${error.message}`);
     });
-  })
-  .catch((error) => {
-    console.error(`Error creating github release. ${error.message}`);
-  });
 }
 
 function promiseSeries(promiseTasks) {
   const results = [];
   return promiseTasks
-  .map((promiseTask) => {
-    if (typeof promiseTask !== 'function') {
-      return () => promiseTask;
-    }
-    return promiseTask;
-  })
-  .reduce((chainedPromise, promiseTask) =>
-      chainedPromise
+    .map((promiseTask) => {
+      if (typeof promiseTask !== 'function') {
+        return () => promiseTask;
+      }
+      return promiseTask;
+    })
+    .reduce((chainedPromise, promiseTask) => chainedPromise
       .then(promiseTask)
       .then((promiseTaskResult) => {
         results.push(promiseTaskResult);
         return promiseTaskResult;
-      })
-    , Promise.resolve()
-  )
-  .then(() => results);
+      }), Promise.resolve())
+    .then(() => results);
 }
 
 promiseSeries([
