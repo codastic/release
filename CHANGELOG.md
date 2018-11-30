@@ -1,4 +1,8 @@
 
+### v1.5.0 / 2018-11-30 07:44:53
+
+- Update dependencies (i: Mario Volke, r: Christian Ranz, c: c67c249)
+
 ### v1.4.1 / 2018-05-23 10:02:19
 
 - Fix missing title in changelog when using VisualStudio Team Services (i: Mario Volke, r: Jonathan Häberle, c: a84e1e8)
