@@ -125,7 +125,16 @@ function filterPullRequests(pullRequests, commits) {
     commitExists[commit] = true;
   });
 
-  return pullRequests.filter(({ commit }) => !commitExists[commit]);
+  // Search for any matching prefix length of the commit hash
+  // because git does not guarantee to always have 7 digit abbreviated commit hashes.
+  return pullRequests.filter(({ commit }) => {
+    for (let length = 1; length <= commit.length; length += 1) {
+      if (commitExists[commit.substr(0, length)]) {
+        return false;
+      }
+    }
+    return true;
+  });
 }
 
 function resolveImplementers(pullRequests, callback) {
