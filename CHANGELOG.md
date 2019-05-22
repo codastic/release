@@ -1,4 +1,8 @@
 
+### v1.6.0 / 2019-05-22 14:33:00
+
+- Support varying length of abbreviated commit hashes in update changelog (i: Mario Volke, r: Jonathan Häberle, c: 566115c)
+
 ### v1.5.0 / 2018-11-30 07:44:53
 
 - Update dependencies (i: Mario Volke, r: Christian Ranz, c: c67c249)
