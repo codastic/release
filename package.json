@@ -3,8 +3,8 @@
   "version": "1.6.0",
   "description": "A collection of release and changelog management script you can easily use via NPM.",
   "scripts": {
-    "changes": "./bin/update-changelog.js --dry-run .",
-    "prerelease": "npm run -s test && ./bin/update-changelog.js .",
+    "changes": "./bin/update-changelog.js --dry-run --link-commit https://github.com/codastic/release/commit/:commit .",
+    "prerelease": "npm run -s test && ./bin/update-changelog.js --link-commit https://github.com/codastic/release/commit/:commit .",
     "release": "./bin/release.js .",
     "postrelease": "npm publish . --access public",
     "test": "eslint ."

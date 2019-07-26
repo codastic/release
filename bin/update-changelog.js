@@ -29,7 +29,9 @@ if (argv.help) {
     'Options:',
     '  --dry-run (optional) Outputs changes instead of writing to CHANGELOG.md.',
     '  --since (optional) Limit search for pull requests to the given ISO date (e.g. "2017-01-01").',
-    '  --hide-reviewer (optional) If set the reviewer will not be put into the CHANGELOG.md.'
+    '  --hide-reviewer (optional) If set the reviewer will not be put into the CHANGELOG.md.',
+    '  --link-commit (optional) If set the commit hash in the output will be linked.'
+    + ' Expects a template URL in the form of "http://example.com/:commit".'
   ].join('\n'));
   process.exit(0);
 }
@@ -176,11 +178,13 @@ function stringifyPullRequests(pullRequests) {
     reviewer,
     commit
   }) => {
+    const commitString = argv['link-commit'] ? `[${commit}](${argv['link-commit'].replace(':commit', commit)})` : commit;
+
     // Bitbucket case
     if (!reviewer) {
-      return `- ${message} (i: ${implementer}, c: ${commit})\n`;
+      return `- ${message} (i: ${implementer}, c: ${commitString})\n`;
     }
-    return `- ${message} (i: ${implementer}, r: ${reviewer}, c: ${commit})\n`;
+    return `- ${message} (i: ${implementer}, r: ${reviewer}, c: ${commitString})\n`;
   }).join('');
 }
 
