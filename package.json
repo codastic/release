@@ -26,8 +26,8 @@
     "versioning"
   ],
   "engines": {
-    "node": ">=6.0.0",
-    "npm": ">=4.0.0"
+    "node": ">=8.0.0",
+    "npm": ">=6.0.0"
   },
   "author": "Codastic <info@codastic.com>",
   "contributors": [
