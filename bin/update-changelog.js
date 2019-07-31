@@ -97,7 +97,7 @@ function getPullRequests(callback) {
 }
 
 function findCommitsInChangelog(callback) {
-  const matcher = /c: ([^)]+)\)$/;
+  const matcher = /c: \[{0,1}([^)\]]+)/;
   const commits = [];
   const input = fs.createReadStream(changelogPath);
   const lineReader = readline.createInterface({
