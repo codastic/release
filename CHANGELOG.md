@@ -1,4 +1,10 @@
 
+### v1.7.0 / 2019-07-31 13:55:08
+
+- Document link-commit feature in readme (i: Chris Ranz, r: Mario Volke, c: [a847d7a](https://github.com/codastic/release/commit/a847d7a))
+- Update critical dependencies (i: Mario Volke, r: Christian Ranz, c: [3fe7967](https://github.com/codastic/release/commit/3fe7967))
+- Optionally link commit hash in changelog (i: Mario Volke, r: Christian Ranz, c: [2c06d71](https://github.com/codastic/release/commit/2c06d71))
+
 ### v1.6.0 / 2019-05-22 14:33:00
 
 - Support varying length of abbreviated commit hashes in update changelog (i: Mario Volke, r: Jonathan Häberle, c: 566115c)
