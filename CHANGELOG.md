@@ -1,4 +1,8 @@
 
+### v1.7.1 / 2019-07-31 14:45:25
+
+- Fix parsing of changelog with linked commits (i: Mario Volke, r: Christian Ranz, c: [6d70047](https://github.com/codastic/release/commit/6d70047))
+
 ### v1.7.0 / 2019-07-31 13:55:08
 
 - Document link-commit feature in readme (i: Chris Ranz, r: Mario Volke, c: [a847d7a](https://github.com/codastic/release/commit/a847d7a))
