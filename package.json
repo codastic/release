@@ -26,8 +26,8 @@
     "versioning"
   ],
   "engines": {
-    "node": ">=6.0.0",
-    "npm": ">=4.0.0"
+    "node": ">=8.0.0",
+    "npm": ">=6.0.0"
   },
   "author": "Codastic <info@codastic.com>",
   "contributors": [
@@ -41,9 +41,9 @@
   },
   "homepage": "https://github.com/codastic/release#readme",
   "devDependencies": {
-    "eslint": "^5.9.0",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.14.0"
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint-plugin-import": "^2.18.2"
   },
   "dependencies": {
     "@octokit/rest": "^16.0.5",
