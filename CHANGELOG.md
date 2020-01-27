@@ -1,4 +1,11 @@
 
+### v1.8.0 / 2020-01-27 15:05:17
+
+- Fix typo in buildCommands, fixes #18 (i: Chris Ranz, r: Mario Volke, c: [171bb55](https://github.com/codastic/release/commit/171bb55))
+- Update README on update-changelog usage (i: Mario Volke, r: Christian Ranz, c: [372235c](https://github.com/codastic/release/commit/372235c))
+- Bump eslint-utils from 1.4.0 to 1.4.3 (i: dependabot[bot], r: Christian Ranz, c: [bcbbcb7](https://github.com/codastic/release/commit/bcbbcb7))
+- Add interactive mode to update changelog script (i: Mario Volke, r: Christian Ranz, c: [5a88f81](https://github.com/codastic/release/commit/5a88f81))
+
 ### v1.7.1 / 2019-07-31 14:45:25
 
 - Fix parsing of changelog with linked commits (i: Mario Volke, r: Christian Ranz, c: [6d70047](https://github.com/codastic/release/commit/6d70047))
