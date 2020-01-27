@@ -111,7 +111,7 @@ const buildCommands = [
   `${argv['build-command']} &&`,
   '# Add built changes',
   'git add --all &&',
-  `git diff-index --quiet HEAD || git commit -m 'Added built files to verion v${newVersion}'`
+  `git diff-index --quiet HEAD || git commit -m 'Added built files to version v${newVersion}'`
 ];
 
 const pushUpstreamCommands = [
