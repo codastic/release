@@ -4,12 +4,9 @@ const childProcess = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const minimist = require('minimist');
-const prompt = require('prompt');
+const prompts = require('prompts');
 const readline = require('readline');
 const octokit = require('@octokit/rest');
-
-prompt.message = 'Requires initial config';
-prompt.start();
 
 const argv = minimist(process.argv, {
   boolean: ['help'],
@@ -87,14 +84,13 @@ function getConfig() {
         resolve(config);
       });
     } else {
-      prompt.get(['accessToken'], (error, result) => {
-        if (error) {
-          reject(error);
-          return;
-        }
-
+      prompts({
+        type: 'text',
+        name: 'accessToken',
+        message: 'Please provide a Github Access Token (will be persisted)?'
+      }).then((response) => {
         const config = {
-          accessToken: result.accessToken
+          accessToken: response.accessToken
         };
         fs.writeFile(configPath, JSON.stringify(config, null, '  '), (error2) => {
           if (error2) {
@@ -104,7 +100,7 @@ function getConfig() {
 
           resolve(config);
         });
-      });
+      }).catch(reject);
     }
   });
 }
