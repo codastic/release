@@ -57,6 +57,8 @@ $ update-changelog ROOT_DIR [OPTIONS]
 
 - `--hide-reviewer`: *(optional)* If set the reviewer will not be put into the `CHANGELOG.md`.
 
+- `--interactive`: *(optional)* If set every addition to the changelog has to be confirmed manually.
+
 - `--link-commit`: *optional* If set the commit hash in the output will be linked. Expects a template URL in the form of "http://example.com/:commit".
 
 ## release
