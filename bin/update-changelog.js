@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const readline = require('readline');
 const minimist = require('minimist');
+const prompts = require('prompts');
 
 const argv = minimist(process.argv, {
   boolean: ['dry-run', 'help', 'hide-reviewer'],
@@ -30,8 +31,9 @@ if (argv.help) {
     '  --dry-run (optional) Outputs changes instead of writing to CHANGELOG.md.',
     '  --since (optional) Limit search for pull requests to the given ISO date (e.g. "2017-01-01").',
     '  --hide-reviewer (optional) If set the reviewer will not be put into the CHANGELOG.md.',
+    '  --interactive (optional) If set every addition to the changelog has to be confirmed manually.',
     '  --link-commit (optional) If set the commit hash in the output will be linked.'
-    + ' Expects a template URL in the form of "http://example.com/:commit".'
+      + ' Expects a template URL in the form of "http://example.com/:commit".'
   ].join('\n'));
   process.exit(0);
 }
@@ -171,21 +173,38 @@ function resolveImplementers(pullRequests, callback) {
   next(0);
 }
 
-function stringifyPullRequests(pullRequests) {
-  return pullRequests.map(({
-    message,
-    implementer,
-    reviewer,
-    commit
-  }) => {
-    const commitString = argv['link-commit'] ? `[${commit}](${argv['link-commit'].replace(':commit', commit)})` : commit;
+function stringifyPullRequest({
+  message,
+  implementer,
+  reviewer,
+  commit
+}) {
+  const commitString = argv['link-commit'] ? `[${commit}](${argv['link-commit'].replace(':commit', commit)})` : commit;
 
-    // Bitbucket case
-    if (!reviewer) {
-      return `- ${message} (i: ${implementer}, c: ${commitString})\n`;
-    }
-    return `- ${message} (i: ${implementer}, r: ${reviewer}, c: ${commitString})\n`;
-  }).join('');
+  // Bitbucket case
+  if (!reviewer) {
+    return `- ${message} (i: ${implementer}, c: ${commitString})\n`;
+  }
+  return `- ${message} (i: ${implementer}, r: ${reviewer}, c: ${commitString})\n`;
+}
+
+function filterPullRequestsInteractively(pullRequests) {
+  return pullRequests.reduce((promise, pullRequest) => (
+    promise.then(async (filteredPullRequests) => {
+      const response = await prompts({
+        type: 'confirm',
+        name: 'value',
+        initial: true,
+        message: stringifyPullRequest(pullRequest)
+      });
+
+      if (!response.value) {
+        return filteredPullRequests;
+      }
+
+      return [...filteredPullRequests, pullRequest];
+    })
+  ), Promise.resolve([]));
 }
 
 function prependToChangelog(str) {
@@ -207,19 +226,21 @@ getPullRequests((pullRequests) => {
   findCommitsInChangelog((commits) => {
     const newPullRequests = filterPullRequests(pullRequests, commits);
 
-    if (newPullRequests.length === 0) {
-      console.error('Error: There are no new changes!');
-      process.exit(1);
-    }
-
     resolveImplementers(newPullRequests, () => {
-      const changeString = stringifyPullRequests(newPullRequests);
+      (argv.interactive ? filterPullRequestsInteractively(newPullRequests) : Promise.resolve(newPullRequests)).then((finalPullRequests) => {
+        if (finalPullRequests.length === 0) {
+          console.error('Error: There are no new changes!');
+          process.exit(1);
+        }
 
-      if (argv['dry-run']) {
-        console.log(changeString);
-      } else {
-        prependToChangelog(changeString);
-      }
+        const changeString = finalPullRequests.map(stringifyPullRequest).join('');
+
+        if (argv['dry-run']) {
+          console.log(changeString);
+        } else {
+          prependToChangelog(changeString);
+        }
+      });
     });
   });
 });
