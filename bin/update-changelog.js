@@ -73,7 +73,7 @@ function getPullRequests(callback) {
         const subject = group.shift();
         const approvedBy = /^Approved-by:\s([^<]+)\s<([^>]+)>$/;
         let message = group
-          .filter(l => !approvedBy.test(l))
+          .filter((l) => !approvedBy.test(l))
           .join()
           .replace(/\n|\r/g, '')
           .trim();
@@ -129,16 +129,27 @@ function filterPullRequests(pullRequests, commits) {
     commitExists[commit] = true;
   });
 
-  // Search for any matching prefix length of the commit hash
-  // because git does not guarantee to always have 7 digit abbreviated commit hashes.
-  return pullRequests.filter(({ commit }) => {
-    for (let length = 1; length <= commit.length; length += 1) {
-      if (commitExists[commit.substr(0, length)]) {
-        return false;
+  const filteredPullRequests = [];
+  for (const pullRequest of pullRequests) {
+    // Search for any matching prefix length of the commit hash
+    // because git does not guarantee to always have 7 digit abbreviated commit hashes.
+    let found = false;
+    for (let length = 1; length <= pullRequest.commit.length; length += 1) {
+      if (commitExists[pullRequest.commit.substr(0, length)]) {
+        found = true;
+        break;
       }
     }
-    return true;
-  });
+
+    // Abort as soon as the first pull request was found in changelog.
+    if (found) {
+      break;
+    } else {
+      filteredPullRequests.push(pullRequest);
+    }
+  }
+
+  return filteredPullRequests;
 }
 
 function resolveImplementers(pullRequests, callback) {
