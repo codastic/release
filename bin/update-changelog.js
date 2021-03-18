@@ -123,22 +123,26 @@ function findCommitsInChangelog(callback) {
   });
 }
 
-function filterPullRequests(pullRequests, commits) {
-  const commitExists = {};
-  commits.forEach((commit) => {
-    commitExists[commit] = true;
-  });
-
-  // Search for any matching prefix length of the commit hash
-  // because git does not guarantee to always have 7 digit abbreviated commit hashes.
-  return pullRequests.filter(({ commit }) => {
-    for (let length = 1; length <= commit.length; length += 1) {
-      if (commitExists[commit.substr(0, length)]) {
-        return false;
-      }
+function matchAbbreviatedCommit(abbrCommit, commits) {
+  for (let length = 1; length <= abbrCommit.length; length += 1) {
+    if (commits.indexOf(abbrCommit.substr(0, length)) >= 0) {
+      return true;
     }
-    return true;
-  });
+  }
+  return false;
+}
+
+function filterPullRequests(pullRequests, commits) {
+  const filteredPullRequests = [];
+  for (let i = 0; i < pullRequests.length; i += 1) {
+    if (matchAbbreviatedCommit(pullRequests[i].commit, commits)) {
+      break;
+    }
+
+    filteredPullRequests.push(pullRequests[i]);
+  }
+
+  return filteredPullRequests;
 }
 
 function resolveImplementers(pullRequests, callback) {
