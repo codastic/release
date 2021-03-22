@@ -73,7 +73,7 @@ function getPullRequests(callback) {
         const subject = group.shift();
         const approvedBy = /^Approved-by:\s([^<]+)\s<([^>]+)>$/;
         let message = group
-          .filter(l => !approvedBy.test(l))
+          .filter((l) => !approvedBy.test(l))
           .join()
           .replace(/\n|\r/g, '')
           .trim();
