@@ -1,4 +1,12 @@
 
+### v1.9.0 / 2021-03-22 07:41:27
+
+- Filter pull requests from open changes as soon as first commit matches entry in changelog (i: Mario Volke, r: Christian Ranz, c: [08ab166](https://github.com/codastic/release/commit/08ab166))
+- Bump node-fetch from 2.3.0 to 2.6.1 (i: dependabot[bot], r: Mario Volke, c: [141bcc9](https://github.com/codastic/release/commit/141bcc9))
+- Bump lodash from 4.17.15 to 4.17.19 (i: dependabot[bot], r: Mario Volke, c: [4b470f4](https://github.com/codastic/release/commit/4b470f4))
+- Fix major vulnerabilities (i: Chris Ranz, r: Mario Volke, c: [4239863](https://github.com/codastic/release/commit/4239863))
+- Bump acorn from 6.2.1 to 6.4.1 (i: dependabot[bot], r: Mario Volke, c: [78b703a](https://github.com/codastic/release/commit/78b703a))
+
 ### v1.8.0 / 2020-01-27 15:05:17
 
 - Fix typo in buildCommands, fixes #18 (i: Chris Ranz, r: Mario Volke, c: [171bb55](https://github.com/codastic/release/commit/171bb55))
