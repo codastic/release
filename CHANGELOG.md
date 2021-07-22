@@ -1,4 +1,11 @@
 
+### v1.9.1 / 2021-07-22 14:03:48
+
+- Bump hosted-git-info from 2.7.1 to 2.8.9 (i: dependabot[bot], r: Mario Volke, c: [6eb4c82](https://github.com/codastic/release/commit/6eb4c82))
+- Bump glob-parent from 5.0.0 to 5.1.2 (i: dependabot[bot], r: Mario Volke, c: [8b94562](https://github.com/codastic/release/commit/8b94562))
+- Bump lodash from 4.17.19 to 4.17.21 (i: dependabot[bot], r: Mario Volke, c: [eeec27d](https://github.com/codastic/release/commit/eeec27d))
+- Fix abbreviated commits in update changelog with different length (i: Mario Volke, r: Christian Ranz, c: [08cb6e1](https://github.com/codastic/release/commit/08cb6e1))
+
 ### v1.9.0 / 2021-03-22 07:41:27
 
 - Filter pull requests from open changes as soon as first commit matches entry in changelog (i: Mario Volke, r: Christian Ranz, c: [08ab166](https://github.com/codastic/release/commit/08ab166))
