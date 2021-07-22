@@ -129,7 +129,8 @@ function matchAbbreviatedCommit(abbrCommit, commits) {
       return true;
     }
   }
-  return false;
+
+  return commits.some(commit => commit.startsWith(abbrCommit));
 }
 
 function filterPullRequests(pullRequests, commits) {
