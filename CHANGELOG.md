@@ -1,4 +1,8 @@
 
+### v1.10.0 / 2026-03-03 14:34:39
+
+- Add support for squash commits in update changelog (i: Mario Volke, c: [9218a0b](https://github.com/codastic/release/commit/9218a0b))
+
 ### v1.9.1 / 2021-07-22 14:03:48
 
 - Bump hosted-git-info from 2.7.1 to 2.8.9 (i: dependabot[bot], r: Mario Volke, c: [6eb4c82](https://github.com/codastic/release/commit/6eb4c82))
